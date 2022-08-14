@@ -20,11 +20,13 @@ class Game
     puts `clear`
     setup
     write_empty_teaser
-    puts "Welcome to Hangman! Try to guess the word in 6 guesses or less...".colorize(:color => :white, :background => :blue)
+    render_ascii_art
+    puts
+    puts " " + "Try to guess the word in 6 guesses or less...".colorize(:color => :white, :background => :blue)
     puts
     puts draw
     puts
-    puts "The word you are trying to guess has #{@word.length} letters".colorize(:color => :white, :background => :blue)
+    puts " " + "The word you are trying to guess has #{@word.length} letters".colorize(:color => :white, :background => :blue)
     puts
     puts "   #{@teaser}"
     puts
@@ -37,10 +39,15 @@ class Game
     player_guess
   end
 
+  ##Displays ascii art for title
+  def render_ascii_art
+    puts File.read("ascii.txt").colorize(:green)
+  end
+
   ##Shows the player an empty teaser for the word at the start of the game
   def write_empty_teaser
     @word.split("").each { |i|
-      @teaser += "_ "
+      @teaser += " _ "
     }
   end
 
@@ -68,14 +75,14 @@ class Game
 
   ##After making a guess this will be displayed on the screen
    def enter_a_letter
-    puts "Please enter a letter".colorize(:color => :white, :background => :blue)
+    puts " " + "Please enter a letter".colorize(:color => :white, :background => :blue)
    end
 
    ##If a guess is not a letter or has already been used, redraw the page
    def try_again
     draw
     draw_teaser
-    puts "Used Letters".underline
+    puts "  " + "Used Letters".underline
     print_used_letters
     puts
     puts
@@ -85,6 +92,7 @@ class Game
 
   ##Takes in a user input
   def player_guess
+    puts
     guess = gets.chomp.downcase
 
     if @letters.include? guess
@@ -92,15 +100,21 @@ class Game
       letter_exists(guess)
     elsif guess.is_integer?
       puts `clear`
-      puts "You can't put a number!".colorize(:red)
+      render_ascii_art
+      puts
+      puts "  You can't put a number!".colorize(:red)
       try_again
     elsif guess.length > 1
       puts `clear`
-      puts "Your guess should only have one character!".colorize(:red)
+      render_ascii_art
+      puts
+      puts "  Your guess should only have one character!".colorize(:red)
       try_again
     else
       puts `clear`
-      puts "That letter has already been used".colorize(:red)
+      render_ascii_art
+      puts
+      puts "  That letter has already been used".colorize(:red)
       try_again
     end
   end
@@ -108,7 +122,7 @@ class Game
   ##sorts the used letters alphabetically and prints them to the page
   def print_used_letters
     @used_letters = @used_letters.sort { |a, b| a <=> b }
-    @used_letters.each { |l| print "#{l} " }
+    @used_letters.each { |l| print " #{l} " }
   end
 
   ##Checks to see if the letter has already been guessed
@@ -117,11 +131,13 @@ class Game
       @used_letters.push(guess)
       @correct_letters.push(guess)
       filter_letters(guess)
-      puts "That's correct!".colorize(:green)
+      render_ascii_art
+      puts
+      puts "  " +"That's correct!".colorize(:green)
       update_teaser
       draw
       draw_teaser
-      puts "Used Letters".underline
+      puts "  " + "Used Letters".underline
       print_used_letters
       puts
       puts
@@ -131,11 +147,13 @@ class Game
       @used_letters.push(guess)
       filter_letters(guess)
       has_lost?
-      puts "That's not correct!".colorize(:red)
+      render_ascii_art
+      puts
+      puts "  That's not correct!".colorize(:red)
       update_teaser
       draw
       draw_teaser
-      puts "Used Letters".underline
+      puts "  " + "Used Letters".underline
       print_used_letters
       puts
       puts
@@ -151,7 +169,7 @@ class Game
 
   ##Lets the player start the game over after winning or losing
   def play_again?
-    puts "Play again? (y/n)"
+    puts "  " + "Play again? (y/n)"
     decide = gets.chomp
     if decide == "y"
       start
@@ -166,7 +184,7 @@ class Game
   ##After making a guess, checks to see if the player won
   def has_won?
     if @correct_answer == @word
-      puts "You win!"
+      puts "  " + "You win!"
       puts
       play_again?
     else
@@ -178,10 +196,12 @@ class Game
   ##Checks to see if the player has lost
   def has_lost?
     if @incorrect_answers == 6
-      puts "You've Lost!".colorize(:red)
+      render_ascii_art
+      puts
+      puts "  " + "You've Lost!".colorize(:red)
       draw
       puts 
-      puts "The correct word was #{@word.capitalize.colorize(:green)}"
+      puts "  " + "The correct word was #{@word.capitalize.colorize(:green)}"
       puts
       play_again?
     end
