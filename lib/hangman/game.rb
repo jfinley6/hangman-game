@@ -179,8 +179,10 @@ class Game
   def has_lost?
     if @incorrect_answers == 6
       puts "You've Lost!".colorize(:red)
+      draw
       puts 
       puts "The correct word was #{@word.capitalize.colorize(:green)}"
+      puts
       play_again?
     end
   end
