@@ -26,9 +26,9 @@ class Game
     puts
     puts draw
     puts
-    puts " " + "The word you are trying to guess has #{@word.length} letters".colorize(:color => :white, :background => :blue)
-    puts
     puts "   #{@teaser}"
+    puts
+    puts " " + "The word you are trying to guess has #{@word.length} letters".colorize(:color => :white, :background => :blue)
     puts
     play
   end
@@ -82,7 +82,7 @@ class Game
    def try_again
     draw
     draw_teaser
-    puts "  " + "Used Letters".underline
+    puts "  " + "Used Letters".underline.colorize(:color => :white, :background => :blue)
     print_used_letters
     puts
     puts
@@ -137,7 +137,8 @@ class Game
       update_teaser
       draw
       draw_teaser
-      puts "  " + "Used Letters".underline
+      puts "  " + "Used Letters".underline.colorize(:color => :white, :background => :blue)
+      puts
       print_used_letters
       puts
       puts
@@ -153,7 +154,8 @@ class Game
       update_teaser
       draw
       draw_teaser
-      puts "  " + "Used Letters".underline
+      puts "  " + "Used Letters".underline.colorize(:color => :white, :background => :blue)
+      puts
       print_used_letters
       puts
       puts
@@ -184,7 +186,7 @@ class Game
   ##After making a guess, checks to see if the player won
   def has_won?
     if @correct_answer == @word
-      puts "  " + "You win!"
+      puts "  " + "You win!".colorize(:green)
       puts
       play_again?
     else
