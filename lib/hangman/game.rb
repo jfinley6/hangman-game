@@ -22,7 +22,7 @@ class Game
     write_empty_teaser
     render_ascii_art
     puts
-    puts " " + "Try to guess the word in 6 guesses or less...".colorize(:color => :white, :background => :blue)
+    puts " " + "Try to guess the word in 6 trys or less...".colorize(:color => :white, :background => :blue)
     puts
     puts draw
     puts
